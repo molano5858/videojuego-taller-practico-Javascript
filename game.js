@@ -12,6 +12,11 @@ let down=document.querySelector('#down') ;
 let playerPosition={
     x:undefined,
     y:undefined,
+};
+
+let giftPosition={
+    x:undefined,
+    y:undefined,
 }
 
 window.addEventListener('load',setCanvasSize);// le estamos diciendo que cuanto la ventana cargue, ejecute la funcion startGame
@@ -87,12 +92,23 @@ function startGame(){
             }
             game.fillText(emoji,posX,posY);
             
+
+
+            if(col=='I'){
+                if(!giftPosition.x && !giftPosition.y){
+                    giftPosition.x=posX;
+                    giftPosition.y=posY;
+
+                }
+            }
+
+            
             
             // console.log({row, rowI, col, colI})
         })
     })
     
-
+    console.log( giftPosition)
     movePlayer()
     
     
@@ -103,6 +119,13 @@ function clearMap(){
 }
 
 function movePlayer(){
+
+    let colisionX= playerPosition.x.toFixed(1) ==giftPosition.x.toFixed(1);
+    let colisionY=playerPosition.y.toFixed(1) ==giftPosition.y.toFixed(1);
+
+    if(colisionX && colisionY){
+        console.log('colision')
+    }
     
     const emojiPlayer=emojis['PLAYER'];
     game.fillText(emojiPlayer,playerPosition.x,playerPosition.y);
