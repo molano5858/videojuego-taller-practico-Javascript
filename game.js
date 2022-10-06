@@ -32,7 +32,7 @@ function setCanvasSize(){
     }
     canvas.setAttribute('width',canvasSize);
     canvas.setAttribute('height',canvasSize);
-    elementSize= canvasSize/10;
+    elementSize= (canvasSize/10);
 
     startGame()
 }
@@ -74,8 +74,8 @@ function startGame(){
     mapRowCols.forEach((row, rowI)=>{ // el forEach puede devolver el indice, tradicionalmente siempre he usado un parametro, pero si le ponemos dos, el segundo representa el indice
         row.forEach((col,colI)=>{
             const emoji=emojis[col];
-            const posX = elementSize*(colI+1);
-            const posY = elementSize*(rowI+1);
+            const posX = elementSize*(colI+1-0.04);
+            const posY = elementSize*(rowI+1-0.28);
 
             //vamos a renderizar la calaberita, osea el jugador en la misma posicion de la puerta
 
@@ -106,6 +106,7 @@ function movePlayer(){
     
     const emojiPlayer=emojis['PLAYER'];
     game.fillText(emojiPlayer,playerPosition.x,playerPosition.y);
+    console.log(playerPosition.x,playerPosition.y)
 
 }
 
@@ -133,28 +134,40 @@ window.addEventListener('keydown',moveByKey);
 
 
 function moverArriba(){
-    playerPosition.y-=elementSize;
-    startGame()
-    console.log('Arriba');
-
+    if(playerPosition.y-elementSize<0 ){// para que no se salga del mapa hacia arriba
+        console.log('Se salio')
+    }else{
+        playerPosition.y-=elementSize;
+        startGame()
+    }
 };
 
 function moverIzquierda(){
-    playerPosition.x-=elementSize;
-    startGame()
-    console.log('Izquierda')
+
+    if(playerPosition.x-elementSize<0 ){// para que no se salga del mapa hacia izquierda
+        console.log('Se salio')
+    }else{
+        playerPosition.x-=elementSize;
+        startGame()
+    }
 }
 
 function moverDerecha(){
-    playerPosition.x+=elementSize;
-    startGame()
-    console.log('Derecha')
+    if(playerPosition.x+elementSize>canvasSize ){// para que no se salga del mapa hacia derecha
+        console.log('Se salio')
+    }else{
+        playerPosition.x+=elementSize;
+        startGame()
+    }   
 };
 
 function moverAbajo(){
-    playerPosition.y+=elementSize;
-    startGame()
-    console.log('Abajo')
+    if(playerPosition.y+elementSize>canvasSize ){// para que no se salga del mapa hacia abajo
+        console.log('Se salio')
+    }else{
+        playerPosition.y+=elementSize;
+        startGame()
+    }
 }
 
 function moveByKey(event){
