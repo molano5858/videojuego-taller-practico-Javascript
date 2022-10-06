@@ -63,7 +63,7 @@ function startGame(){
             const posX = elementSize*(colI+1);
             const posY = elementSize*(rowI+1);
             game.fillText(emoji,posX,posY);
-            console.log({row, rowI, col, colI})
+            // console.log({row, rowI, col, colI})
         })
     })
 
@@ -74,3 +74,69 @@ function startGame(){
     
 }
 
+//EVENTOS DE LOS BOTONES DE DIRECCION
+
+let up=document.querySelector('#up') ;
+let left=document.querySelector('#left') ;
+let right=document.querySelector('#right') ;
+let down=document.querySelector('#down') ;
+
+up.addEventListener('click',moverArriba);
+left.addEventListener('click',moverIzquierda);
+right.addEventListener('click',moverDerecha);
+down.addEventListener('click',moverAbajo);
+
+up.addEventListener('keydown',moveByKey);
+left.addEventListener('keydown',moveByKey);
+right.addEventListener('keydown',moveByKey);
+down.addEventListener('keydown',moveByKey);
+
+
+
+// function mostrarTecla(event){recibiendo el evento y mostrandolo me doy cuenta de tecla estoy presionando
+//     console.log(event)
+// }
+
+
+
+
+function moverArriba(){
+    console.log('arriba')
+};
+
+function moverIzquierda(){
+    console.log('Izquierda')
+}
+
+function moverDerecha(){
+    console.log('Derecha')
+};
+
+function moverAbajo(){
+    console.log('Abajo')
+}
+
+function moveByKey(event){
+
+    switch (event.key) {
+        case "ArrowUp":
+            moverArriba()
+        break;
+
+        case "ArrowDown":
+            moverAbajo()
+        break;
+
+        case "ArrowRight":
+            moverDerecha()
+        break;
+
+        case "ArrowLeft":
+            moverIzquierda()
+        break;
+    
+        default:
+        break;
+    }
+
+}
