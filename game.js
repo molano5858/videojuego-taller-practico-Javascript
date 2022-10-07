@@ -9,6 +9,7 @@ let right = document.querySelector("#right");
 let down = document.querySelector("#down");
 let livesLeft = document.querySelector("#lives");
 let time = document.querySelector("#time");
+let recordActual = document.querySelector("#record");
 
 let playerPosition = {
   x: undefined,
@@ -55,6 +56,7 @@ function setCanvasSize() {
 
 function startGame() {
   showLivesLeft();
+  showRecord();
   //console.log({ canvasSize, elementSize });
   game.font = elementSize - 10 + "px Verdana"; //estamos haciendo el emoji del tamaño de cada espacio en el canvas que quedamos era 10x10
   game.textAlign = "end";
@@ -187,6 +189,25 @@ function levelFail() {
 function gameWin() {
   console.log("GANASTE Y TERMINASTE EL JUEGO");
   clearInterval(timeInterval);
+
+  record = time.innerHTML;
+  guardarRecord(record);
+}
+
+function guardarRecord(nuevoTiempo) {
+  if (localStorage.length == 0) {
+    localStorage.setItem("record", nuevoTiempo);
+    console.log(`TU PRIMER RECORD ES ${localStorage.getItem("record")}`);
+  } else if (localStorage.getItem("record") > nuevoTiempo) {
+    localStorage.setItem("record", nuevoTiempo);
+    console.log(`NUEVO RECORD ${localStorage.getItem("record")}`);
+  } else {
+    localStorage.getItem("record");
+    console.log(`No se supero el record de ${localStorage.getItem("record")}`);
+  }
+
+  let prueba = localStorage.getItem("record");
+  console.log({ nuevoTiempo, prueba });
 }
 
 function showLivesLeft() {
@@ -202,6 +223,10 @@ function showLivesLeft() {
 
 function showTime() {
   time.innerHTML = Date.now() - timeStart;
+}
+
+function showRecord() {
+  recordActual.innerHTML = localStorage.getItem("record");
 }
 
 //EVENTOS DE LOS BOTONES DE DIRECCION
