@@ -8,6 +8,7 @@ let left = document.querySelector("#left");
 let right = document.querySelector("#right");
 let down = document.querySelector("#down");
 let livesLeft = document.querySelector("#lives");
+let time = document.querySelector("#time");
 
 let playerPosition = {
   x: undefined,
@@ -23,6 +24,10 @@ let enemiesPositions = [];
 
 let nivelActual = 0;
 let lives = 3;
+
+let timeStart;
+let timePlayer;
+let timeInterval;
 
 window.addEventListener("load", setCanvasSize); // le estamos diciendo que cuanto la ventana cargue, ejecute la funcion startGame
 window.addEventListener("resize", setCanvasSize); // evento resize de window nos permite ejecutar la funcion cada vez que se hace cambio dinamico de la pagina, esto soluciona el hecho de que el canva no cambiaba de tamaño si no solo cuando recargabamos
@@ -60,6 +65,11 @@ function startGame() {
 
     gameWin();
     return; // para terminar con la ejecucion del codigo de startgame y que no renderice mas
+  }
+
+  if (!timeStart) {
+    timeStart = Date.now();
+    timeInterval = setInterval(showTime, 100);
   }
 
   let mapRows = map.trim().split("\n"); // .trim() elimina los espacios en blanco al inicio y al final de un string, .split() convierte a un array un string y cada posicion o elemento del array vendra dado por el parametro que le pasemos,
@@ -163,17 +173,20 @@ function levelFail() {
     console.log(`chocaste, te quedan ${lives} vidas `);
     startGame();
   } else {
-    console.log("entro al else");
+    console.log("PERDISTE");
     nivelActual = 0;
     lives = 3;
     playerPosition.x = undefined;
     playerPosition.y = undefined;
+    clearInterval(timeInterval);
+    timeStart = 0;
     startGame();
   }
 }
 
 function gameWin() {
   console.log("GANASTE Y TERMINASTE EL JUEGO");
+  clearInterval(timeInterval);
 }
 
 function showLivesLeft() {
@@ -185,6 +198,10 @@ function showLivesLeft() {
   heartsLeft.forEach((elemento) => {
     livesLeft.append(elemento); //mejor append que innerHTML porque con innerHTML me estaria sobre escribiendo los corazones osea que solo apareceria 1, mientras que con append me va como adicionando sin reescribir lo que ya habia
   });
+}
+
+function showTime() {
+  time.innerHTML = Date.now() - timeStart;
 }
 
 //EVENTOS DE LOS BOTONES DE DIRECCION
