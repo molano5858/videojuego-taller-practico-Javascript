@@ -21,6 +21,7 @@ let giftPosition = {
 let enemiesPositions = [];
 
 let nivelActual = 0;
+let lives = 3;
 
 window.addEventListener("load", setCanvasSize); // le estamos diciendo que cuanto la ventana cargue, ejecute la funcion startGame
 window.addEventListener("resize", setCanvasSize); // evento resize de window nos permite ejecutar la funcion cada vez que se hace cambio dinamico de la pagina, esto soluciona el hecho de que el canva no cambiaba de tamaño si no solo cuando recargabamos
@@ -136,7 +137,7 @@ function movePlayer() {
   });
 
   if (enemyColision) {
-    console.log("Colision con ENEMIGO");
+    levelFail();
   }
 
   const emojiPlayer = emojis["PLAYER"];
@@ -148,6 +149,24 @@ function levelWin() {
   console.log("Ganaste, Subiste de nivel");
   nivelActual += 1;
   startGame();
+}
+console.log(`Vidas antes de la colision ${lives}`);
+function levelFail() {
+  lives--;
+  if (lives > 0) {
+    console.log("Colision con ENEMIGO");
+    playerPosition.x = undefined;
+    playerPosition.y = undefined; //cuando el jugador falla debemos reiniciar las posiciones para que despues de volver a ejecurar la funcion startGame vuelva a asignarle la ubicacion inicial
+    console.log(`chocaste, te quedan ${lives} vidas `);
+    startGame();
+  } else {
+    console.log("entro al else");
+    nivelActual = 0;
+    lives = 3;
+    playerPosition.x = undefined;
+    playerPosition.y = undefined;
+    startGame();
+  }
 }
 
 function gameWin() {
