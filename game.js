@@ -7,6 +7,7 @@ let up = document.querySelector("#up");
 let left = document.querySelector("#left");
 let right = document.querySelector("#right");
 let down = document.querySelector("#down");
+let livesLeft = document.querySelector("#lives");
 
 let playerPosition = {
   x: undefined,
@@ -48,6 +49,7 @@ function setCanvasSize() {
 }
 
 function startGame() {
+  showLivesLeft();
   //console.log({ canvasSize, elementSize });
   game.font = elementSize - 10 + "px Verdana"; //estamos haciendo el emoji del tamaño de cada espacio en el canvas que quedamos era 10x10
   game.textAlign = "end";
@@ -153,6 +155,7 @@ function levelWin() {
 console.log(`Vidas antes de la colision ${lives}`);
 function levelFail() {
   lives--;
+
   if (lives > 0) {
     console.log("Colision con ENEMIGO");
     playerPosition.x = undefined;
@@ -171,6 +174,17 @@ function levelFail() {
 
 function gameWin() {
   console.log("GANASTE Y TERMINASTE EL JUEGO");
+}
+
+function showLivesLeft() {
+  //livesLeft.innerHTML = emojis["HEART"].repeat(lives); esta es la forma corta de hacerlo, a continuacion hare la forma larga que hizo el profesor
+
+  let heartsLeft = Array(lives).fill(emojis["HEART"]);
+
+  livesLeft.innerHTML = ""; // esto es para que cada vez que ingresemos al forEach los corazones empiecen en cero, si no hacemos esto cada vez que nos movamos va a sumar y sumar corazcones, por eso necesitamos colocarlo en cero.
+  heartsLeft.forEach((elemento) => {
+    livesLeft.append(elemento); //mejor append que innerHTML porque con innerHTML me estaria sobre escribiendo los corazones osea que solo apareceria 1, mientras que con append me va como adicionando sin reescribir lo que ya habia
+  });
 }
 
 //EVENTOS DE LOS BOTONES DE DIRECCION
