@@ -10,6 +10,12 @@ let down = document.querySelector("#down");
 let livesLeft = document.querySelector("#lives");
 let time = document.querySelector("#time");
 let recordActual = document.querySelector("#record");
+let botonReiniciar = document.querySelector("#reiniciarJuego");
+botonReiniciar.addEventListener("click", reload);
+
+function reload() {
+  location.reload();
+}
 
 let playerPosition = {
   x: undefined,
@@ -195,6 +201,11 @@ function gameWin() {
 
   record = time.innerHTML;
   guardarRecord(record);
+  reiniciarJuego();
+}
+
+function reiniciarJuego() {
+  let addClass = botonReiniciar.classList.add("mostrarReiniciar");
 }
 
 function guardarRecord(nuevoTiempo) {
