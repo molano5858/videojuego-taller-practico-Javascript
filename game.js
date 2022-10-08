@@ -51,6 +51,9 @@ function setCanvasSize() {
   canvas.setAttribute("height", canvasSize);
   elementSize = canvasSize / 10;
 
+  playerPosition.x = undefined;
+  playerPosition.y = undefined; //esto lo hacemos porque la calavera al hacerle resize a la pantalla se queda quieta, entonces tenemos que redefinir la posicion de la calavera antes de cada vez que mandamos a llamar a starGame()
+
   startGame();
 }
 
